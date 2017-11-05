@@ -71,13 +71,18 @@ function getLiveview(liveviewUrl) {
       port: liveviewUrl.port,
       path: liveviewUrl.path,
       method: 'GET',
-      timeout: 500
+      timeout: 500,
+      headers: {
+        "content-type": "text/plain;charset=x-user-defined"
+      }
+
   };
 
   var httpreq = http.request(options, function (response) {
     response.on('data', function (responseDataObject) {
-      //console.log(responseDataObject);
-      var responseData = responseDataObject.toString();
+      //var responseData = responseDataObject.toString();
+      var responseData = responseDataObject;
+      var responseData2 = responseDataObject.toString();
 
       if(responseData.length >= CRA_LIVEVIEW_MAX_RECEIVE_SIZE){
         //httpreq.abort();
@@ -86,24 +91,29 @@ function getLiveview(liveviewUrl) {
       }
       if(responseData.length >= (CRA_LIVEVIEW_COMMON_HEADER_SIZE + CRA_LIVEVIEW_PLAYLOAD_HEADER_SIZE + offset)){
         if(headerDecode == false){
-          var jpegSize  = ((responseData.charCodeAt(offset + 12) & 0xff) * (256 * 256));
-              jpegSize += ((responseData.charCodeAt(offset + 13) & 0xff) * 256);
-              jpegSize += ((responseData.charCodeAt(offset + 14) & 0xff));
-          var paddingSize = responseData.charCodeAt(offset + 15) & 0xff;
+          var jpegSize  = ((responseData2.charCodeAt(offset + 12) & 0xff) * (256 * 256));
+              jpegSize += ((responseData2.charCodeAt(offset + 13) & 0xff) * 256);
+              jpegSize += ((responseData2.charCodeAt(offset + 14) & 0xff));
+          var paddingSize = responseData2.charCodeAt(offset + 15) & 0xff;
         }
         if (responseData.length >= (CRA_LIVEVIEW_COMMON_HEADER_SIZE + CRA_LIVEVIEW_PLAYLOAD_HEADER_SIZE + jpegSize + offset)) {
           binary = '';
           for(var i = (CRA_LIVEVIEW_PLAYLOAD_HEADER_SIZE + CRA_LIVEVIEW_PLAYLOAD_HEADER_SIZE + offset), len = (CRA_LIVEVIEW_COMMON_HEADER_SIZE + CRA_LIVEVIEW_PLAYLOAD_HEADER_SIZE + offset) + jpegSize; i < len; ++i){
-            binary += String.fromCharCode(responseData.charCodeAt(i) & 0xff);
+            binary += String.fromCharCode(responseData2.charCodeAt(i) & 0xff);
           }
           //var base64 = window.btoa(binary);
           var base64 = new Buffer(binary).toString('base64');
           if(base64.length > 0 && base64[0] == "/"){
             var currentBase64Image = "data:image/jpeg;base64," + base64;
-            console.log(currentBase64Image);
+            console.log("Image base 64 correct");
+            offset = CRA_LIVEVIEW_COMMON_HEADER_SIZE + CRA_LIVEVIEW_PLAYLOAD_HEADER_SIZE + offset + jpegSize + paddingSize;
+            headerDecode = false;
+            return;
           }
           else {
             console.log("I dont know what happen!");
+            httpreq.end();
+            return;
           }
         }
         return;
@@ -134,6 +144,7 @@ app.get('/startLiveview', function (req, res) {
   var promise = startLiveview();
   promise.then(function(response) {
     var liveviewUrl = url.parse(response.toString());
+    console.log("Start liveview at: " + liveviewUrl.href);
     getLiveview(liveviewUrl);
   })
   promise.catch(function(error){
