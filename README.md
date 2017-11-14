@@ -42,9 +42,15 @@ Follow this steps for running the software in your preferred terminal.
 	npm install btoa --save
 	```		
 
-4.	Connect your computer to the Sony HDR-AS20 Camera WiFi.
+4.	Install the [socket.io-client](https://socket.io/docs/client-api/) dependency with [npm](https://www.npmjs.com/).
 
-5.	Run the server.
+	``` bash
+	npm install socket.io-client --save
+	```
+
+5.	Connect your computer to the Sony HDR-AS20 Camera WiFi.
+
+6.	Run the server.
 	``` bash
 	node server.js
 	```		
@@ -60,5 +66,6 @@ https://developer.sony.com/downloads/all/sony-camera-remote-api-beta-sdk/
 ## Built With
 
 * [Node JS](https://nodejs.org/en/) - JavaScript runtime built on Chrome's V8 JavaScript engine
+* [Socket io](https://socket.io/) - JavaScript library for realtime web applications.
 * [npm](https://www.npmjs.com/) - Package manager for JavaScript
 * [JSDoc](http://usejsdoc.org/index.html) - API documentation generator for Javascript
