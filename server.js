@@ -1,5 +1,8 @@
 const http = require('http');
 
+//Socket io client for sending base 64 to another server.
+var socket = require('socket.io-client')('http://localhost:8080');
+
 //Dependency for manage all url parsing.
 const url = require('url');
 
@@ -140,9 +143,10 @@ function getLiveview(liveviewUrl) {
               if(base64.length > 0 && base64[0] == "/"){
                 currentBase64Image = base64;
 
-                console.log("###### Start Base 64 ########");
-                console.log(base64);
-                console.log("###### End Base 64 ########");
+                socket.emit('base64', base64);
+                // console.log("###### Start Base 64 ########");
+                // console.log(base64);
+                // console.log("###### End Base 64 ########");
 
                 //Seting all over to getting the following frame.
                 offset = CRA_LIVEVIEW_COMMON_HEADER_SIZE + CRA_LIVEVIEW_PLAYLOAD_HEADER_SIZE + offset + jpegSize + paddingSize;
@@ -169,15 +173,19 @@ function getLiveview(liveviewUrl) {
 //Creates the server.
 const server = http.createServer((req, res) => {});
 
-server.listen(8080, () => {
-  console.log(`Server running at port: 8080`);
-  var promise = startLiveview();
-  promise.then(function(response) {
-    var liveviewUrl = url.parse(response.toString());
-    console.log("Start liveview at: " + liveviewUrl.href);
-    getLiveview(liveviewUrl);
-  })
-  promise.catch(function(error){
-    console.log(error);
-  })
+server.listen(8000, () => {
+  console.log(`Server running at port: 8000`);
+
+  //Wait until the conection between socket has been established.
+  socket.on('connect', function () {
+      var promise = startLiveview();
+      promise.then(function(response) {
+          var liveviewUrl = url.parse(response.toString());
+          console.log("Start liveview at: " + liveviewUrl.href);
+          getLiveview(liveviewUrl);
+      })
+      promise.catch(function(error){
+          console.log(error);
+      })
+  });
 });

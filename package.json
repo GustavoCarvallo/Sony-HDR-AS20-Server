@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/GustavoCarvallo/Sony-HDR-AS20-Server#readme",
   "dependencies": {
-    "btoa": "^1.1.2"
+    "btoa": "^1.1.2",
+    "socket.io-client": "^2.0.4"
   }
 }
