@@ -9,7 +9,7 @@ var first = true;
 
 socket.on('base64', function(base64){
 	console.log('base 64 received');
-})
+});
 
 server.listen(3001, () => {
   console.log(`Server running at port: 3001`);
