@@ -16,6 +16,6 @@ io.on('connection', function(socket) {
   });
 });
 
-server.listen(8080, () => {
-  console.log(`Server running at port: 8080`);
+server.listen(3001, () => {
+  console.log(`Server running at port: 3001`);
 });

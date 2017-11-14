@@ -1,7 +1,7 @@
 const http = require('http');
 
 //Socket io client for sending base 64 to another server.
-var socket = require('socket.io-client')('http://localhost:8080');
+var socket = require('socket.io-client')('http://172.22.59.230:3001');
 
 //Dependency for manage all url parsing.
 const url = require('url');
@@ -179,6 +179,7 @@ server.listen(8000, () => {
   //Wait until the conection between socket has been established.
   socket.on('connect', function () {
       var promise = startLiveview();
+      console.log("anda");
       promise.then(function(response) {
           var liveviewUrl = url.parse(response.toString());
           console.log("Start liveview at: " + liveviewUrl.href);
