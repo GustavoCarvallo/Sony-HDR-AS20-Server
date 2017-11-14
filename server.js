@@ -1,7 +1,10 @@
 const http = require('http');
 
-//Socket io client for sending base 64 to another server.
-var socket = require('socket.io-client')('http://172.22.59.230:3001');
+//Creates the server.
+const server = http.createServer((req, res) => {});
+
+//Socket io for sending base 64 to another server.
+var socket = require('socket.io')(server);
 
 //Dependency for manage all url parsing.
 const url = require('url');
@@ -169,9 +172,6 @@ function getLiveview(liveviewUrl) {
   });
 
 }
-
-//Creates the server.
-const server = http.createServer((req, res) => {});
 
 server.listen(8000, () => {
   console.log(`Server running at port: 8000`);
