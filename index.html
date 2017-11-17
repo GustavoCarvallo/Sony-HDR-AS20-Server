@@ -3,30 +3,29 @@
 <head>
   <meta charset="utf-8">
   <title>Sony Camera API</title>
-  <!-- Compiled and minified CSS -->
-  <!--<link rel="stylesheet" href="public/css/materialize.min.css">-->
+  <!-- CSS -->
+  <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body>
-  <!--<div class="row" id="imageBlock">-->
-    <!--<div class="col m12 l12 center-align">-->
-      <!--<img src="" id="image"></img>-->
-    <!--</div>-->
-  <!--</div>-->
-  <img src="" id="image"></img>
-  <script src="socket.io/socket.io.js"></script>
+  <div>
+    <h1>Sony Liveview</h1>
+  </div>
+  <div>
+    <img src="" id="image"></img>
+  </div>
 
+
+  <!-- Scripts -->
+  <script src="public/js/socket.io/socket.io.js"></script>
   <script>
     (function run() {
-      var socket = io('http://172.22.60.160:8000');
+      //var socket = io('http://172.22.60.160:8000'); //To test on another computer.
+      var socket = io('http://localhost:8000'); //To test on the same computer.
+
       socket.on('base64', function(base64){
         document.getElementById('image').src = "data:image/jpeg;base64," + base64;
-        // console.log(`A new base 64 image has arrived, frame number: ${++quantity}`);
       })
     })();
-
   </script>
-
-
-  <!-- JavaScripts  -->
 </body>
 </html>

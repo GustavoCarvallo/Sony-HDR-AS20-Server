@@ -1,0 +1,14 @@
+body {
+  background-color: powderblue;
+}
+h1  {
+  color: white;
+  text-align: center;
+}
+p    {
+  color: red;
+}
+img  {
+  display: block;
+  margin: auto;
+}
