@@ -36,21 +36,27 @@ Follow this steps for running the software in your preferred terminal.
 
 2.	Navigate to the directory where the repository has been cloned.
 
-3.	Install the [btoa](https://www.npmjs.com/package/btoa) dependency with [npm](https://www.npmjs.com/).
+3.	Init the project.
+
+``` bash
+npm init
+```
+
+4.	Install the [btoa](https://www.npmjs.com/package/btoa) dependency with [npm](https://www.npmjs.com/).
 
 	``` bash
 	npm install btoa --save
 	```		
 
-4.	Install the [socket.io-client](https://socket.io/docs/client-api/) dependency with [npm](https://www.npmjs.com/).
+5.	Install the [socket.io](https://www.npmjs.com/package/socket.io) dependency with [npm](https://www.npmjs.com/).
 
 	``` bash
-	npm install socket.io-client --save
+	npm install socket.io --save
 	```
 
-5.	Connect your computer to the Sony HDR-AS20 Camera WiFi.
+6.	Connect your computer to the Sony HDR-AS20 Camera WiFi.
 
-6.	Run the server.
+7.	Run the server.
 	``` bash
 	node server.js
 	```		
