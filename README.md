@@ -38,9 +38,9 @@ Follow this steps for running the software in your preferred terminal.
 
 3.	Init the project.
 
-``` bash
-npm init
-```
+	``` bash
+	npm init
+	```
 
 4.	Install the [btoa](https://www.npmjs.com/package/btoa) dependency with [npm](https://www.npmjs.com/).
 
