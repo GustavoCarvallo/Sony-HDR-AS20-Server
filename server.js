@@ -171,6 +171,12 @@ function getLiveview(liveviewUrl) {
       });
   });
 
+  request.setTimeout(500, function( ) {
+    console.log("Reset");
+    request.abort();
+    self(liveviewUrl);
+  });
+
 }
 
 server.listen(8000, () => {
@@ -179,7 +185,6 @@ server.listen(8000, () => {
   //Wait until the conection between socket has been established.
   socket.on('connect', function () {
       var promise = startLiveview();
-      console.log("anda");
       promise.then(function(response) {
           var liveviewUrl = url.parse(response.toString());
           console.log("Start liveview at: " + liveviewUrl.href);
