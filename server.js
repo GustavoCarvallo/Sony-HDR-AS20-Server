@@ -171,6 +171,11 @@ function getLiveview(liveviewUrl) {
       });
   });
 
+  request.on('error', (e)=> {
+    //Catch possible error.
+    console.log("Error: " + e);
+  });
+
   request.setTimeout(500, function( ) {
     console.log("Reset");
     request.abort();
